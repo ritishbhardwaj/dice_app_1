@@ -1,6 +1,5 @@
-
-
 import 'dart:html';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 
@@ -9,16 +8,8 @@ void main(){
 }
 
 class Dice extends StatefulWidget {
-  const Dice({super.key});
+  Dice({super.key});
 
-  var list_images= {
-    1   :  "dice1.png",
-    2   :  "dice2.png",
-    3   :  "dice3.png",
-    4   :  "dice4.png",
-    5   :  "dice5.png",
-    6   :  "dice6.png",
-  };
 
   @override
   State<Dice> createState() => _DiceState();
@@ -26,51 +17,69 @@ class Dice extends StatefulWidget {
 
 class _DiceState extends State<Dice> {
 
-  void giveMeDice(Event){
+  
+  int num1 = 1;
+  int num2 = 5;
 
+  void calculate() async{
+      Random random =Random();
+
+    for (int i=0;i<15; i++){
+
+      await Future.delayed(const Duration(milliseconds: 100),(){
+
+        num1= random.nextInt(6)+1;
+        num2= random.nextInt(6)+1;
+
+        setState(() {});
+
+      });
+    }   
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-      
-        backgroundColor: Colors.red,
-        appBar: AppBar(
+      home: GestureDetector(
+        onTap: calculate,
+
+        child: Scaffold(
+        
           backgroundColor: Colors.red,
-          title: Text("Dice App"),
-          ),
-        body: 
-        Column(
-      
-
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Text(" Roll The Dices",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 25,
-              fontWeight: FontWeight.bold),),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Image.asset("images/dice1.png", fit: BoxFit.cover, width: 150,height: 150,),
-                Image.asset("images/dice2.png", fit: BoxFit.cover, width: 150,height: 150,),
-                // Image.asset()
-              ],
+          appBar: AppBar(
+            backgroundColor: Colors.red,
+            title: Text("Dice App"),
             ),
+          body: 
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Text(" Roll The Dices",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 25,
+                fontWeight: FontWeight.bold),),
+        
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Image.asset("images/dice$num1.png", fit: BoxFit.cover, width: 150,height: 150,),
+                  Image.asset("images/dice$num2.png", fit: BoxFit.cover, width: 150,height: 150,),
+                  // Image.asset()
+                ],
+              ),
 
-            Text("Lets Roll",
-            style: TextStyle(
-              fontSize: 25,
-              color: Colors.white,
-              fontStyle: FontStyle.italic
-            ),),
-            
-          ],
+              Text("Lets Roll",
+                style: TextStyle(
+                  fontSize: 25,
+                  color: Colors.white,
+                  fontStyle: FontStyle.italic
+              ),),
+              
+            ],
+          ),
+        
         ),
-
       ),
     );
   }
